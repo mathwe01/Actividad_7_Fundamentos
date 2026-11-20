@@ -59,6 +59,26 @@ def potencia(base, exponente):
         return 1
     return base * potencia(base, exponente - 1)
 
+def sumar_puntajes_iterativo(lista):
+    total = 0
+    for entrega in lista:
+        total += entrega[3]
+    return total
+
+def buscar_codigo_iterativo(lista, codigo):
+    for entrega in lista:
+        if entrega[0] == codigo:
+            return entrega
+    return None
+
+def contar_archivos_iterativo(lista, palabra):
+    contador = 0
+    for entrega in lista:
+        if palabra in entrega[1].lower():
+            contador += 1
+    return contador
+    
+
     
     
     
@@ -97,6 +117,13 @@ try:
     potencia(2, -1)
 except ValueError as error:
     print("Error:", error)
-
     
+print()
+print("Sumatoria recursiva:", sumar_puntajes(entregas))
+print("Sumatoria iterativa:", sumar_puntajes_iterativo(entregas))
+print("Busqueda recursiva:", buscar_codigo(entregas, "U2026005"))
+print("Busqueda iterativa:", buscar_codigo_iterativo(entregas, "U2026005"))
+print("Conteo recursivo 'final':", contar_archivos(entregas, "final"))
+print("Conteo iterativo 'final':",contar_archivos_iterativo(entregas, "final") )
+
     
