@@ -52,6 +52,13 @@ def contar_palabra_clave(lista, palabra):
         raise ValueError("La palabra clave no puede estar vacía")
     return contar_archivos(lista, palabra)
 
+def potencia(base, exponente):
+    if exponente < 0:
+        raise ValueError("El exponente no puede ser negativo")
+    if exponente == 0:
+        return 1
+    return base * potencia(base, exponente - 1)
+
     
     
     
@@ -79,6 +86,15 @@ for palabra in ["final", "v2", "xyz"]:
     
 try:
     contar_palabra_clave(entregas, "")
+except ValueError as error:
+    print("Error:", error)
+
+print()
+for base, exp in [(2, 0), (2, 5), (3, 4)]:
+    print(f"{base} elevado a {exp} =", potencia(base, exp))
+    
+try:
+    potencia(2, -1)
 except ValueError as error:
     print("Error:", error)
 
