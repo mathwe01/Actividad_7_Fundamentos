@@ -27,12 +27,38 @@ def total_puntajes(lista):
             raise ValueError("El puntaje no puede ser negativo")
         return sumar_puntajes(lista)
     
-        
-        
+def buscar_codigo(lista, codigo, indice=0):
+    if indice == len(lista):
+        return None
+    if lista[indice][0] == codigo:
+        return lista[indice]
+    return buscar_codigo(lista, codigo, indice + 1)
+
+def buscar_entrega(lista, codigo):
+    codigo = codigo.strip().upper()
+    if codigo == "":
+        raise ValueError("El codigo de busqueda no puede estar vacío")
+    return buscar_codigo(lista, codigo)
+    
+    
+    
+
 if __name__ == "__main__":
     mostrar_entregas(entregas)
     print()
     print("Suma total de puntajes:", total_puntajes(entregas))
+    print()
     
+    for codigo in ["U2026004", "U2026099"]:
+        resultado = buscar_entrega(entregas, codigo)
+        if resultado is None:
+            print(f"Codigo {codigo}: no encontrado")
+        else:
+            print(f"Codigo {codigo}: encontrado -> {resultado[1]}, puntaje {resultado[3]}")
+            
+try:
+    buscar_entrega(entregas, "  ")
+except ValueError as error:
+    print("Error", error)
 
     
