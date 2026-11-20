@@ -16,8 +16,23 @@ def mostrar_entregas(lista):
     for codigo, archivo, intentos, puntaje, obs in lista:
         print(f"{codigo:<10}{archivo:<22}{intentos:<10}{puntaje:<9}{obs}")
         
+def sumar_puntajes(lista, indice=0):
+    if indice == len(lista):
+        return 0
+    return lista[indice][3] + sumar_puntajes(lista, indice + 1)
+
+def total_puntajes(lista):
+    for entrega in lista:
+        if entrega[3] < 0:
+            raise ValueError("El puntaje no puede ser negativo")
+        return sumar_puntajes(lista)
+    
+        
         
 if __name__ == "__main__":
     mostrar_entregas(entregas)
+    print()
+    print("Suma total de puntajes:", total_puntajes(entregas))
+    
 
     
