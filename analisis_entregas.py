@@ -39,10 +39,22 @@ def buscar_entrega(lista, codigo):
     if codigo == "":
         raise ValueError("El codigo de busqueda no puede estar vacío")
     return buscar_codigo(lista, codigo)
-    
-    
-    
 
+def contar_archivos(lista, palabra, indice=0):
+    if indice == len(lista):
+        return 0
+    suma = 1 if palabra in lista[indice][1].lower() else 0
+    return suma + contar_archivos(lista, palabra, indice + 1)
+
+def contar_palabra_clave(lista, palabra):
+    palabra = palabra.strip().lower()
+    if palabra == "":
+        raise ValueError("La palabra clave no puede estar vacía")
+    return contar_archivos(lista, palabra)
+
+    
+    
+    
 if __name__ == "__main__":
     mostrar_entregas(entregas)
     print()
@@ -59,6 +71,16 @@ if __name__ == "__main__":
 try:
     buscar_entrega(entregas, "  ")
 except ValueError as error:
-    print("Error", error)
+    print("Error:", error)
 
+print()
+for palabra in ["final", "v2", "xyz"]:
+    print(f"Archivos con '{palabra}':", contar_palabra_clave(entregas, palabra))
+    
+try:
+    contar_palabra_clave(entregas, "")
+except ValueError as error:
+    print("Error:", error)
+
+    
     
