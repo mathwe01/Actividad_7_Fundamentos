@@ -77,53 +77,74 @@ def contar_archivos_iterativo(lista, palabra):
         if palabra in entrega[1].lower():
             contador += 1
     return contador
-    
 
+def ejecutar_pruebas():
+    pruebas = [
+        ("Caso base", "potencia(0, 5)", 1, potencia(5, 0)),
+        ("Caso recursivo simple", "potencia(2, 3)", 8, potencia(2, 3)),
+        ("Lista vacía", "buscar_codigo([], 'U2026001')", None, buscar_codigo([], "U2026001")),
+        ("Codigo existente", "buscar_codigo(entregas, 'U2026003')", "informe.pdf", buscar_codigo(entregas, "U2026003")[1]),
+        ("Codigo inexistente", "buscar_codigo(entregas, 'U2026099')", None, buscar_codigo(entregas, "U2026099")),
+        ("Comparacion iterativa", "sumar_puntajes vs iterativa", sumar_puntajes_iterativo(entregas), sumar_puntajes(entregas)),
+    ]
+    print(f"{'Prueba':<24}{'Esperado':<14}{'Obtenido':<14}Resultado")
+    print("-" * 62)
+    for nombre, entrada, esperado, obtenido in pruebas:
+        estado = "OK" if esperado == obtenido else "FALLO"
+        print(f"{nombre:<24}{str(esperado):<14}{str(obtenido):<14}{estado}")
+        
     
-    
+def menu():
+    while True:
+        print()
+        print("1. Mostrar entregas")
+        print("2. Suma total de puntajes")
+        print("3. Buscar codigo de estudiante")
+        print("4. Contar archivos por palabra clave")
+        print("5. Calcular potencia")
+        print("6. Comparar recursivo e iterativo")
+        print("7. Ejecutar pruebas")
+        print("0. Salir")
+        opcion = input("Opcion: ")
+        print()
+        try:
+            if opcion == "1":
+                mostrar_entregas(entregas)
+            elif opcion == "2":
+                print("Suma total de puntajes:", total_puntajes(entregas))
+            elif opcion == "3":
+                codigo = input("Codigo a buscar: ")
+                resultado = buscar_entrega(entregas, codigo)
+                if resultado is None:
+                    print("Codigo no encontrado")
+                else:
+                    print("Encontrado", resultado)
+            elif opcion == "4":
+                palabra = input("Palabra clave: ")
+                print("Archivos encontrados:", contar_palabra_clave(entregas, palabra))
+            elif opcion == "5":
+                try:
+                    base = int(input("Base: "))
+                    exponente = int(input("Exponente: "))
+                except ValueError:
+                    raise ValueError("Debe ingresar numeros enteros")
+                print("Resultado:", potencia(base, exponente))
+            elif opcion == "6":
+                print("Sumatoria recursiva", sumar_puntajes(entregas))
+                print("Sumatoria iterativa", sumar_puntajes_iterativo(entregas))
+                print("Conteo recursivo 'final':", contar_archivos(entregas, "final"))
+                print("Conteo iterativo 'final':", contar_archivos_iterativo(entregas, "final"))
+            elif opcion == "7":
+                ejecutar_pruebas()
+            elif opcion == "0":
+                print("Programa finalizado")
+                break
+            else:
+                print("Opcion no valida")
+        except ValueError as error:
+            print("Error:", error)
+            
+        
     
 if __name__ == "__main__":
-    mostrar_entregas(entregas)
-    print()
-    print("Suma total de puntajes:", total_puntajes(entregas))
-    print()
-    
-    for codigo in ["U2026004", "U2026099"]:
-        resultado = buscar_entrega(entregas, codigo)
-        if resultado is None:
-            print(f"Codigo {codigo}: no encontrado")
-        else:
-            print(f"Codigo {codigo}: encontrado -> {resultado[1]}, puntaje {resultado[3]}")
-            
-try:
-    buscar_entrega(entregas, "  ")
-except ValueError as error:
-    print("Error:", error)
-
-print()
-for palabra in ["final", "v2", "xyz"]:
-    print(f"Archivos con '{palabra}':", contar_palabra_clave(entregas, palabra))
-    
-try:
-    contar_palabra_clave(entregas, "")
-except ValueError as error:
-    print("Error:", error)
-
-print()
-for base, exp in [(2, 0), (2, 5), (3, 4)]:
-    print(f"{base} elevado a {exp} =", potencia(base, exp))
-    
-try:
-    potencia(2, -1)
-except ValueError as error:
-    print("Error:", error)
-    
-print()
-print("Sumatoria recursiva:", sumar_puntajes(entregas))
-print("Sumatoria iterativa:", sumar_puntajes_iterativo(entregas))
-print("Busqueda recursiva:", buscar_codigo(entregas, "U2026005"))
-print("Busqueda iterativa:", buscar_codigo_iterativo(entregas, "U2026005"))
-print("Conteo recursivo 'final':", contar_archivos(entregas, "final"))
-print("Conteo iterativo 'final':",contar_archivos_iterativo(entregas, "final") )
-
-    
+    menu()
